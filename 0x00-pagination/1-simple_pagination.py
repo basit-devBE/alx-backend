@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-
-
-#!/usr/bin/env python3
 """Pagination helper function.
 """
-from typing import Tuple
+from typing import Tuple, List
+import csv
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
@@ -12,11 +10,7 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
     start = (page - 1) * page_size
     end = start + page_size
-    return (start, end)
-
-import csv
-import math
-from typing import List
+    return start, end
 
 
 class Server:
@@ -35,20 +29,15 @@ class Server:
                 reader = csv.reader(f)
                 dataset = [row for row in reader]
             self.__dataset = dataset[1:]
-
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-            pass
-    
-    def get_page(self, page: int = 1, page_size: int=10) -> List[List]:
-         """
-         Returns a page of data from the dataset.
-         """
-         assert type(page) == int and type(page_size) == int
-         assert page > 0 and page_size > 0
-         start, end = index_range(page, page_size)
-         data = self.dataset()
-         if start > len(data):
-              return []
-         return data[start:end]
+        """Returns a page of data from the dataset.
+        """
+        assert isinstance(page, int) and isinstance(page_size, int)
+        assert page > 0 and page_size > 0
+        start, end = index_range(page, page_size)
+        data = self.dataset()
+        if start >= len(data):
+            return []
+        return data[start:end]
