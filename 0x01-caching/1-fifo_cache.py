@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""First In First Out caching algorithm
+"""
 from base_caching import BaseCaching
 from collections import OrderedDict
 class FIFOCache(BaseCaching):
